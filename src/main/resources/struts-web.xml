@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+    "http://struts.apache.org/dtds/struts-2.1.7.dtd">    
+
+<struts>
+
+	<!-- 零配置设置 -->
+    <constant name="struts.convention.package.locators" value="front" />
+    <constant name="struts.convention.result.path" value="/WEB-INF/pages" />
+    <constant name="struts.convention.package.locators.basePackage" value="com.angho.cloud.front" />
+	<constant name="struts.convention.action.name.separator" value="-" />
+	<constant name="struts.convention.default.parent.package" value="angho-default" />
+	
+	<package name="angho-default" extends="struts-default">
+        <result-types>
+            <result-type name="json" class="org.apache.struts2.json.JSONResult"/>
+            <result-type name="xslt" class="org.apache.struts2.views.xslt.XSLTResult"/>
+        </result-types>
+		<interceptors>
+            <!-- <interceptor name="authentication" class="com.angho.cloud.front.interceptor.manage.AuthenticationInterceptor" /> -->
+            <interceptor-stack name="myStack">
+                <!-- interceptor-ref name="authentication" /> -->
+                <interceptor-ref name="annotationWorkflow" />
+                <interceptor-ref name="alias"/>
+                <interceptor-ref name="servletConfig"/>
+                <interceptor-ref name="i18n"/>
+                <interceptor-ref name="prepare"/>
+                <interceptor-ref name="chain"/>
+                <interceptor-ref name="debugging"/>
+                <interceptor-ref name="scopedModelDriven"/>
+                <interceptor-ref name="modelDriven"/>
+                <interceptor-ref name="fileUpload"/>
+                <interceptor-ref name="checkbox"/>
+                <interceptor-ref name="multiselect"/>
+                <interceptor-ref name="staticParams"/>
+                <interceptor-ref name="actionMappingParams"/>
+                <interceptor-ref name="params">
+                  <param name="excludeParams">dojo\..*,^struts\..*</param>
+                </interceptor-ref>
+                <interceptor-ref name="cookie"/>
+                <interceptor-ref name="conversionError"/>
+                <interceptor-ref name="validation">
+                    <param name="excludeMethods">input,back,cancel,browse</param>
+                </interceptor-ref>
+                <interceptor-ref name="workflow">
+                    <param name="excludeMethods">input,back,cancel,browse</param>
+                </interceptor-ref>
+                <interceptor-ref name="exception">
+                  <param name="logEnabled">true</param>
+                  <param name="logLevel">info</param>             
+              	</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="myStack" />
+		<global-results>
+		    <result name="unauthorized">/home/unauth.jsp</result>
+            <!--<result name="login" type="redirect">/login.action</result>-->
+            <!--<result name="unauthorizedJson" type="redirect">/unauthorized-json.action</result>-->
+            <!--<result name="redirect" type="redirect">${url}?${param}</result>-->
+		</global-results>
+	</package>
+    
+   
+</struts>
